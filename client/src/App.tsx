@@ -1,28 +1,23 @@
 import React from 'react';
-import './App.css';
-import api from './services/api';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import PageNotFound from './pages/PageNotFound';
+import ProductForm from './pages/forms/ProductForm'
 
 function App() {
-  
-  const produtos = async ()  => {
-    try {
-      const response = await api.get('/produtos')
-
-      console.log(response)
-      return response.data
-    } catch(error) {
-      throw error;
-    }
-  } 
-
-  produtos()
-  
-
   return (
-    <div className="App">
-      <h1>Hora do show</h1>
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <Routes>
+          <Route path="/produtos/cadastro" element={<ProductForm />} />
+          <Route path="/produtos/exibir" element={<HomePage />} />
+          <Route path="/" element={<Navigate to="produtos/exibir"/>} />
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 
 export default App;
+
