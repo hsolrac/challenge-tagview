@@ -1,16 +1,17 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { Toast } from '../util/Toast';
 
-const API_URL = 'http://localhost:3000/api/v1'; 
-
 const axiosConfig: AxiosRequestConfig = {
-  baseURL: API_URL,
+  baseURL: process.env.REACT_APP_API_URL,
   headers: {
     'Content-Type': 'application/json'
   }
 };
 
 const api: AxiosInstance = axios.create(axiosConfig);
+
+
+//TODO: Remanejar requisições para um dominio proprio
 
 export const getProducts = async () => {
   try {
