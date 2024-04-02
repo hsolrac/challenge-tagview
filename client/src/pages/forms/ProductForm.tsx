@@ -1,16 +1,15 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { createProduct } from '../../services/api'
 import { Product } from '../../types/Product'
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const ProductForm: React.FC = () => {
-
+function ProductForm () {
   const [product, setProduct] = useState<Product>({
     nome: '',
     descricao: '',
     preco: 0,
-    imagem: null
+    imagem: ''
   });
 
   const [error, setError] = useState<string[]>([])
@@ -22,7 +21,10 @@ const ProductForm: React.FC = () => {
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const file = e.target.files && e.target.files[0];
-    setProduct({ ...product, imagem: file || null });
+    if(file){
+      const imageUrl = URL.createObjectURL(file);
+      setProduct({ ...product, imagem: imageUrl });
+    }
   };
 
   const saveProduct = async (e: FormEvent) => {
@@ -31,15 +33,13 @@ const ProductForm: React.FC = () => {
       nome: '',
       descricao: '',
       preco: 0,
-      imagem: null
+      imagem:'' 
     });
     try {
       await createProduct(product);
     } catch(error){
       setError(error.message)
     }
-
-    console.log(error)
   };
 
   return (

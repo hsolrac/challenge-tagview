@@ -8,8 +8,7 @@ const axiosConfig: AxiosRequestConfig = {
   }
 };
 
-const api: AxiosInstance = axios.create(axiosConfig);
-
+export const api: AxiosInstance = axios.create(axiosConfig);
 
 //TODO: Remanejar requisições para um dominio proprio
 
@@ -32,6 +31,3 @@ export const createProduct = async (params: any) => {
     throw new Error(error.response.data.error);
   }
 };
-
-export default api;
-

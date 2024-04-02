@@ -6,7 +6,7 @@ class Produto < ApplicationRecord
   validates :descricao, presence: true, length: { minimum: 30, maximum: 255 }
 
   def as_json(object = {})
-    super(only: [:nome, :descricao, :preco, :imagem]).
+    super(only: [:id, :nome, :descricao, :preco, :imagem]).
       merge(imagem: imagem_url)
   end
 

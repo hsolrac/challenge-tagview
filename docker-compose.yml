@@ -14,25 +14,34 @@ services:
       - /var/run/postgresql:/var/run/postgresql
   api:
     build: 
-      context: .
-      dockerfile: ./api/Dockerfile
+      context: ./api
+      dockerfile: Dockerfile
     ports:
       - "4000:4000"
-    volumes:
-      - .:/tag-api
     env_file:
       - .env.development
     depends_on:
       - db
   client:
     build: 
-      context: .
-      dockerfile: ./client/Dockerfile
+      context: ./client
+      dockerfile: Dockerfile
     ports:
       - "3000:3000"
-    volumes:
-      - .:/tag-client
     env_file:
       - .env.development
     depends_on:
-      - db
+      - api
+  minio:
+    image: minio/minio
+    ports:
+      - "9000:9000"
+    environment:
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minioadmin
+    command: server /data
+    volumes:
+      - minio_data:/data
+
+volumes:
+  minio_data:
