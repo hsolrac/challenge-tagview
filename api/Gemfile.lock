@@ -84,7 +84,7 @@ GEM
     connection_pool (2.4.1)
     crass (1.0.6)
     date (3.3.4)
-    debug (1.9.1)
+    debug (1.9.2)
       irb (~> 1.10)
       reline (>= 0.3.8)
     diff-lcs (1.5.1)
@@ -96,7 +96,7 @@ GEM
     factory_bot_rails (6.4.3)
       factory_bot (~> 6.4)
       railties (>= 5.0.0)
-    faker (3.3.0)
+    faker (3.3.1)
       i18n (>= 1.8.11, < 2)
     globalid (1.2.1)
       activesupport (>= 6.1)
@@ -131,9 +131,19 @@ GEM
     net-smtp (0.5.0)
       net-protocol
     nio4r (2.7.1)
+    nokogiri (1.16.3-aarch64-linux)
+      racc (~> 1.4)
+    nokogiri (1.16.3-arm-linux)
+      racc (~> 1.4)
+    nokogiri (1.16.3-arm64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.16.3-x86-linux)
+      racc (~> 1.4)
+    nokogiri (1.16.3-x86_64-darwin)
+      racc (~> 1.4)
     nokogiri (1.16.3-x86_64-linux)
       racc (~> 1.4)
-    pagy (7.0.11)
+    pagy (8.0.1)
     pg (1.5.6)
     psych (5.1.2)
       stringio
@@ -179,7 +189,7 @@ GEM
       rake (>= 12.2)
       thor (~> 1.0, >= 1.2.2)
       zeitwerk (~> 2.6)
-    rake (13.1.0)
+    rake (13.2.0)
     rdoc (6.6.3.1)
       psych (>= 4.0.0)
     reline (0.5.0)
@@ -218,6 +228,11 @@ GEM
     zeitwerk (2.6.13)
 
 PLATFORMS
+  aarch64-linux
+  arm-linux
+  arm64-darwin
+  x86-linux
+  x86_64-darwin
   x86_64-linux
 
 DEPENDENCIES

@@ -1,52 +1,20 @@
-FROM registry.docker.com/library/ruby:3.1.4-slim as base
+# syntax = docker/dockerfile:1
+FROM ruby:3.1.4
 
-# Rails app lives here
-WORKDIR /tag-api
+# Set working directory
+WORKDIR /app
 
-# Set production environment
-ENV BUNDLE_PATH="/usr/local/bundle" 
-# Configure bundle path
-RUN bundle config --local set path 'vendor/bundle'
-
-# Throw-away build stage to reduce size of final image
-FROM base as build
-
-# Install packages needed to build gems
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git libpq-dev
-
-# Install application gems
+# Copy Gemfile and Gemfile.lock and install gems
 COPY Gemfile Gemfile.lock ./
-RUN bundle install && \
-    rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git
+RUN bundle install
 
-# Copy application code
+# Copy the rest of the application code
 COPY . .
 
-# Final stage for app image
-FROM base
-
-# Install packages needed for deployment
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libvips postgresql-client && \
-    rm -rf /var/lib/apt/lists /var/cache/apt/archives
-
-# Copy built artifacts: gems, application
-COPY --from=build /usr/local/bundle /usr/local/bundle
-COPY --from=build /tag-api /tag-api
-
-# Prepare the directory structure
-RUN mkdir -p tmp/pids
-
-# Run and own only the runtime files as a non-root user for security
-RUN useradd rails --create-home --shell /bin/bash && \
-    chown -R rails:rails db log storage tmp
-USER rails:rails
+# Expose port 4000 to the Docker host, so it can be accessed from the outside
+EXPOSE 4000
 
 # Entrypoint prepares the database.
-ENTRYPOINT ["/tag-api/bin/docker-entrypoint"]
+ENTRYPOINT ["/app/bin/docker-entrypoint"]
 
-# Start the server by default, this can be overwritten at runtime
-EXPOSE 4000
-CMD ["./bin/rails", "server"]
-
+CMD ["bin/rails", "server", "-p", "4000", "-b", "0.0.0.0"]

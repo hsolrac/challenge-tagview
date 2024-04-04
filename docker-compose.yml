@@ -22,6 +22,8 @@ services:
       - .env.development
     depends_on:
       - db
+    volumes:
+      - ./api:/app
   client:
     build: 
       context: ./client
@@ -32,16 +34,19 @@ services:
       - .env.development
     depends_on:
       - api
-  minio:
-    image: minio/minio
-    ports:
-      - "9000:9000"
-    environment:
-      MINIO_ACCESS_KEY: minioadmin
-      MINIO_SECRET_KEY: minioadmin
-    command: server /data
     volumes:
-      - minio_data:/data
+      - ./client:/app-client
+  # minio:
+  #   image: minio/minio
+  #   ports:
+  #     - "9000:9000"
+  #   environment:
+  #     MINIO_ACCESS_KEY: minioadmin
+  #     MINIO_SECRET_KEY: minioadmin
+  #   command: server /data
+  #   volumes:
+  #     - minio_data:/data
 
-volumes:
-  minio_data:
+# volumes:
+#   minio_data:
+#
