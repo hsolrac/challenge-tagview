@@ -4,7 +4,7 @@ module Api
       after_action { pagy_headers_merge(@pagy) if @pagy }
       
       def index
-        @pagy, produtos = pagy(Produto.all)
+        @pagy, produtos = pagy(Produto.all, items: params[:limit])
 
         render json: produtos
       end

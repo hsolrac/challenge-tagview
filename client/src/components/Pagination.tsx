@@ -5,18 +5,25 @@ import { Stack } from '@chakra-ui/react';
 type PaginationProps = {
   page: number;
   totalPages: number;
-  limit: number;
+  totalCount: number;
   handlePageClick: (page: number) => void;
+  handleLimitForPage: (limit: number) => void;
 }
 
-function Pagination({page, totalPages = 1, limit = 10, handlePageClick}: PaginationProps){
+function Pagination({page, totalPages = 1 , totalCount = 1, handlePageClick, handleLimitForPage}: PaginationProps){
+  
   return (
      <Stack p={5}>
       <div>Página: {page+1}</div>
+      <select onChange={(e) => handleLimitForPage(Number(e.target.value))}>
+        <option value={20}>20</option>
+        <option value={50}>50</option>
+        <option value={totalCount}>Todos</option>
+      </select>
       <Paginate
         page={page}
-        count={totalPages}
-        pageSize={limit}
+        count={totalCount}
+        pageSize={totalPages}
         onPageChange={handlePageClick}
         shadow="lg"
         fontWeight="blue"

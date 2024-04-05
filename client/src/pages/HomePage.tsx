@@ -7,32 +7,42 @@ import Pagination from '../components/Pagination'
 function HomePage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [page, setPage] = useState<number>(0);
+  const [perPage, setPerPage] = useState<number | null>(null);
   const [headers, setHeaders] = useState<any>({});
+
 
   const handlePageClick = (page: number) => {
     setPage(page);
   };
 
-  useEffect(() => {
-    fetchProduct(page+1);
-  }, [page]);
+  const handleLimitForPage =  (limit: number) => {
+    setPerPage(limit)
+  }
 
-  const fetchProduct = async (page: number) => {
+  useEffect(() => {
+    fetchProduct(page+1, perPage);
+  }, [page, perPage]);
+
+  const fetchProduct = async (page: number, perPage: number | null) => {
     try {
-      const { data, headers }  = await getProducts(page);
-      setHeaders(headers)
+      const { data, headers }  = await getProducts(page, perPage);
+      setHeaders(headers);
       setProducts(data);
     } catch (error) {
       console.error('Error fetching products', error);
     }
   };
 
-  console.log(headers?.AxiosHeaders)
-
   return (
     <div style={{margin: '5%'}}>
       <ProductList products={products}  />
-      <Pagination page={page} totalPages={headers['total-pages']} limit={headers['page-items']} handlePageClick={handlePageClick} />
+      {headers && 
+      <Pagination page={page} 
+        totalCount={headers['total-count']} 
+        totalPages={headers['page-items']} 
+        handlePageClick={handlePageClick} 
+        handleLimitForPage={handleLimitForPage}
+      />}    
     </div>
   );
 }
