@@ -12,10 +12,10 @@ export const api: AxiosInstance = axios.create(axiosConfig);
 
 //TODO: Remanejar requisições para um dominio proprio
 
-export const getProducts = async () => {
+export const getProducts =async (page: number) => {
   try {
-    const response = await api.get('/produtos');
-    return response.data;
+    const response = await api.get('/produtos', { params: { page } });
+    return { data: response.data, headers: response.headers } ;
   } catch (error) {
     throw error;
   }

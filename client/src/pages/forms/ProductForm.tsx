@@ -22,8 +22,7 @@ function ProductForm () {
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const file = e.target.files && e.target.files[0];
     if(file){
-      const imageUrl = URL.createObjectURL(file);
-      setProduct({ ...product, imagem: imageUrl });
+      setProduct({ ...product, imagem: '' });
     }
   };
 
@@ -43,7 +42,7 @@ function ProductForm () {
   };
 
   return (
-    <form onSubmit={saveProduct}>
+    <form onSubmit={saveProduct} encType="multipart/form-data">
       <label>Nome</label>
       <input type="text" name="nome" value={product.nome} onChange={handleInputChange} required />
 

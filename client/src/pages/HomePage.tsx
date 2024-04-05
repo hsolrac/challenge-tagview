@@ -2,26 +2,37 @@ import React, { useEffect, useState } from 'react';
 import { Product } from '../types/Product';
 import { getProducts } from '../services/api';
 import ProductList from '../components/ProductList';
+import Pagination from '../components/Pagination'
 
 function HomePage() {
   const [products, setProducts] = useState<Product[]>([]);
+  const [page, setPage] = useState<number>(0);
+  const [headers, setHeaders] = useState<any>({});
+
+  const handlePageClick = (page: number) => {
+    setPage(page);
+  };
 
   useEffect(() => {
-    fetchProduct();
-  }, []);
+    fetchProduct(page+1);
+  }, [page]);
 
-  const fetchProduct = async () => {
+  const fetchProduct = async (page: number) => {
     try {
-      const productsData = await getProducts();
-      setProducts(productsData);
+      const { data, headers }  = await getProducts(page);
+      setHeaders(headers)
+      setProducts(data);
     } catch (error) {
       console.error('Error fetching products', error);
     }
   };
 
+  console.log(headers?.AxiosHeaders)
+
   return (
     <div style={{margin: '5%'}}>
       <ProductList products={products}  />
+      <Pagination page={page} totalPages={headers['total-pages']} limit={headers['page-items']} handlePageClick={handlePageClick} />
     </div>
   );
 }
