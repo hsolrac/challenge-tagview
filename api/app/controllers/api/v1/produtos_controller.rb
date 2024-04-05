@@ -1,8 +1,11 @@
 module Api 
   module V1 
     class ProdutosController < ApplicationController
-      def index 
-        pagy, produtos = pagy(Produto.all)
+      after_action { pagy_headers_merge(@pagy) if @pagy }
+      
+      def index
+        @pagy, produtos = pagy(Produto.all)
+
         render json: produtos
       end
 
