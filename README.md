@@ -24,7 +24,7 @@
     - Melhorias visuais
         - [ ] Listagem
         - [ ] Formulario de cadastro
-        - [ ] Paginação
+        - [ ] Paginação e select de itens por pagina
         - [ ] Modal
         - [ ] Card  
       
