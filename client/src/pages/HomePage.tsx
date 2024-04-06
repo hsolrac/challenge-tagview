@@ -9,6 +9,7 @@ function HomePage() {
   const [page, setPage] = useState<number>(0);
   const [perPage, setPerPage] = useState<number | null>(null);
   const [headers, setHeaders] = useState<any>({});
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
 
   const handlePageClick = (page: number) => {
@@ -16,6 +17,7 @@ function HomePage() {
   };
 
   const handleLimitForPage =  (limit: number) => {
+    setPage(0)
     setPerPage(limit)
   }
 
@@ -28,6 +30,7 @@ function HomePage() {
       const { data, headers }  = await getProducts(page, perPage);
       setHeaders(headers);
       setProducts(data);
+      setIsLoaded(true)
     } catch (error) {
       console.error('Error fetching products', error);
     }
@@ -35,10 +38,11 @@ function HomePage() {
 
   return (
     <div style={{margin: '5%'}}>
-      <ProductList products={products}  />
+      <ProductList products={products} isLoaded={isLoaded}  />
       {headers && 
       <Pagination page={page} 
         totalCount={headers['total-count']} 
+        isLoaded={isLoaded}
         totalPages={headers['page-items']} 
         handlePageClick={handlePageClick} 
         handleLimitForPage={handleLimitForPage}

@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom';
-import { SimpleGrid, Text } from '@chakra-ui/react'
+import { SimpleGrid, Text  } from '@chakra-ui/react'
 import { Product } from '../types/Product'
 import ProductCard from './ProductCard'
 import Modal from './Modal'
 
 type ProductProps = {
-  products: Product[]
+  products: Product[];
+  isLoaded: boolean;
 }
 
-function ProductList({ products }: ProductProps ) {
+function ProductList({ products, isLoaded}: ProductProps ) {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const location = useLocation();
@@ -39,7 +40,7 @@ function ProductList({ products }: ProductProps ) {
     <SimpleGrid spacing={4} columns={4}>
       {products.length === 0 && <Text>Nenhum resultado encontrado</Text>}
       {products.map((product, index) => (
-        <ProductCard key={index} product={product} openModal={(product: Product) => openModal(product)} /> 
+        <ProductCard key={index} isLoaded={isLoaded} product={product} openModal={(product: Product) => openModal(product)} /> 
       ))}
       <Modal open={isOpenModal} product={selectedProduct} onClose={() => setOpenModal(false)} />
     </SimpleGrid>
