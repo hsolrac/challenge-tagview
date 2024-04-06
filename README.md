@@ -19,11 +19,11 @@
     - [x] /produtos/cadastro
     - [x] Paginação e escolher limite de produtos por pagina (20, 50 ou todos)
     - [x] Abrir modal com informações do produto ao clicar no card
-    - [ ] Validações
+    - [x] Validações
     - [ ] Abrir modal do produto ao detectar query params idProduto
     - Melhorias visuais
         - [ ] Listagem
-        - [ ] Formulario de cadastro
+        - [x] Formulario de cadastro
         - [ ] Paginação e select de itens por pagina
         - [ ] Modal
         - [ ] Card  
