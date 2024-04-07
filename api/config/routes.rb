@@ -3,7 +3,9 @@ Rails.application.routes.draw do
 
   namespace :api do 
     namespace :v1 do 
-      resources :produtos, only: [:index, :create]
+      resources :produtos, only: [:index, :create] do 
+        post 'importacao', on: :collection
+      end
     end
   end
 end

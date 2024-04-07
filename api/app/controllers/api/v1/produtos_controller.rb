@@ -19,6 +19,17 @@ module Api
         end
       end
 
+      def importacao 
+        file = params[:file]
+        importacao = TagProducts::ImportacaoService.new(file: file).call
+        
+        if importacao.key?(:ok)
+          render json: {}, status: :ok
+        else
+          render json: importacao, status: 400
+        end
+      end
+
       private
 
       def produto_params
