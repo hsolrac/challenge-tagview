@@ -1,5 +1,16 @@
 import React from 'react';
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button } from '@chakra-ui/react';
+import { Modal, 
+ModalOverlay, 
+ModalContent, 
+ModalHeader, 
+ModalFooter, 
+ModalBody, 
+ModalCloseButton, 
+Button,
+Text,
+Image
+} 
+from '@chakra-ui/react';
 import { Product } from '../types/Product';
 import { Currency } from '../util/Currency'
 
@@ -19,7 +30,12 @@ function ModalProduct({ open, onClose, product }: ModalProductProps) {
         <ModalHeader>{product.nome}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          {product.descricao}
+          <Image
+            fallbackSrc='https://via.placeholder.com/251x141'
+            src={product.imagem}
+            alt={product.nome}
+          />
+          <Text>{product.descricao}</Text>
           {Currency.format(product.preco)}
         </ModalBody>
         <ModalFooter>
