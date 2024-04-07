@@ -1,10 +1,8 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import React from 'react';
 import { createProduct } from '../../services/api'
-import { Product } from '../../types/Product'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Currency } from '../../util/Currency'
-import { Field, Form, Formik, useFormik } from 'formik';
+import { Field, Form, Formik } from 'formik';
 import {
   FormControl,
   FormLabel,
@@ -50,8 +48,6 @@ function validateDescription(value: string) {
 }
 
 function ProductForm() {
-  const [value, setValue] = useState('');
-  const format = (value: string) => Currency.format(Number(value));
 
   return (
     <>
@@ -62,11 +58,20 @@ function ProductForm() {
             nome: '',
             preco: '', 
             descricao: '', 
-            imagem: ''
+            imagem: '' 
           }}
           onSubmit={(values, actions) => {
-            createProduct(values).then(_ => 
-              actions.resetForm()
+            const formData = new FormData()
+            formData.append('produto[nome]', values.nome)
+            formData.append('produto[preco]', values.preco)
+            formData.append('produto[descricao]', values.descricao)
+            if (values.imagem) {
+              formData.append('produto[imagem]', values.imagem);
+            }
+            createProduct(formData).then(_ => {
+              actions.resetForm();
+              actions.setFieldValue('imagem', ''); 
+            }
             ).catch(error => 
               console.error(error)
             ).finally(() => {
@@ -99,7 +104,7 @@ function ProductForm() {
                   <FormControl isInvalid={form.errors.descricao && form.touched.descricao}>
                     <FormLabel>Descrição</FormLabel>
                     <Textarea {...field} placeholder='Descrição' />
-                    <FormErrorMessage>{form.errors.description}</FormErrorMessage>
+                    <FormErrorMessage>{form.errors.descricao}</FormErrorMessage>
                   </FormControl>
                 )}
               </Field>
@@ -107,7 +112,11 @@ function ProductForm() {
                 {({ field, form }: any) => (
                   <FormControl isInvalid={form.errors.imagem && form.touched.imagem}>
                     <FormLabel>Imagem</FormLabel>
-                    <Input {...field} type='file' />
+                    <Input type='file' name='imagem'
+                      onChange={(e: any) => {
+                        props.setFieldValue('imagem', e.currentTarget.files[0])
+                      }
+                    }/>
                     <FormErrorMessage>{form.errors.imagem}</FormErrorMessage>
                   </FormControl>
                 )}
