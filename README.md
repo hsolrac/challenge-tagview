@@ -11,7 +11,7 @@
     - [x]  Preço do Produto: mínimo numérico de 10, máximo indefinido, obrigatório.
     - [x]  Descrição Completa: mínimo de 30 caracteres, máximo de 255, obrigatório.
     - [x]  Imagem: png ou jpg, máximo de 5MB, opcional.
-    - [ ]  (Opcional) Importação de produtos via CSV
+    - [x]  (Opcional) Importação de produtos via CSV
   - [x] Paginação
       
 - FRONTEND
@@ -20,11 +20,11 @@
     - [x] Paginação e escolher limite de produtos por pagina (20, 50 ou todos)
     - [x] Abrir modal com informações do produto ao clicar no card
     - [x] Validações
-    - [ ] Abrir modal do produto ao detectar query params idProduto
+    - [x] Abrir modal do produto ao detectar query params idProduto
     - Melhorias visuais
         - [ ] Listagem
         - [x] Formulario de cadastro
-        - [ ] Paginação e select de itens por pagina
+        - [x] Paginação e select de itens por pagina
         - [ ] Modal
         - [ ] Card  
       
