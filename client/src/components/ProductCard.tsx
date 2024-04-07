@@ -11,21 +11,21 @@ type ProductCardProps = {
 
 function ProductCard({product, openModal, isLoaded}: ProductCardProps ) {
   return (
-  <Skeleton isLoaded={isLoaded}>
-    <Card style={{cursor: 'pointer'}} onClick={() => openModal(product)}>
-      <CardHeader>
-        <Image
-          objectFit='cover'
-          src={product.imagem}
-          alt={product.nome}
-        />
-      </CardHeader>
-      <CardBody>
-        <Heading size='md'>{product.nome}</Heading>
-        <Text>{Currency.format(product.preco)}</Text>
-      </CardBody>
-    </Card>     
-  </Skeleton>
+    <Skeleton isLoaded={isLoaded}>
+      <Card style={{cursor: 'pointer'}} onClick={() => openModal(product)}>
+        <CardHeader>
+          <Image
+            fallbackSrc='https://via.placeholder.com/251x141'
+            src={product.imagem}
+            alt={product.nome}
+          />
+        </CardHeader>
+        <CardBody>
+          <Heading size='md'>{Currency.format(product.preco)}</Heading>
+          <Text>{product.nome}</Text>
+        </CardBody>
+      </Card>     
+    </Skeleton>
   )
 }
 
