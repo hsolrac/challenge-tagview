@@ -29,4 +29,4 @@
         - [ ] Card  
       
  
-- [ ] Deploy    
+- [x] Deploy    
