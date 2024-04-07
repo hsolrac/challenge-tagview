@@ -1,5 +1,26 @@
-### Teste para vaga de Desenvolvedor FullStack na TagView 
+## Teste para vaga de Desenvolvedor FullStack na TagView 
 
+### Requisitos
+- Docker
+- Docker compose
+
+> (Caso não esteja usando docker, você pode consultar o README de cada projeto separadamente)
+ [API](/api/README.md) | [Cliente](/client/README.md)
+
+
+### Rodando projeto
+Clone este e repositorio
+```bash
+git clone git@github.com:hsolrac/challenge-tagview.git
+cd challenge-tagview
+```
+Buid e rode o projeto 
+
+```bash
+docker compose up --build
+```
+
+Aguarde alguns minutos e se tudo estiver ok, basta acessar *http://localhost:3000*
 
 ##### TODO
 - API
