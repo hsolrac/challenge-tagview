@@ -11,7 +11,7 @@
     - [x]  Preço do Produto: mínimo numérico de 10, máximo indefinido, obrigatório.
     - [x]  Descrição Completa: mínimo de 30 caracteres, máximo de 255, obrigatório.
     - [x]  Imagem: png ou jpg, máximo de 5MB, opcional.
-    - [ ]  Opcional) Importação de produtos via CSV
+    - [ ]  (Opcional) Importação de produtos via CSV
   - [x] Paginação
       
 - FRONTEND

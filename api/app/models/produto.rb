@@ -7,13 +7,6 @@ class Produto < ApplicationRecord
 
   def as_json(object = {})
     super(only: [:id, :nome, :descricao, :preco, :imagem]).
-      merge(imagem: imagem_url)
+      merge(imagem: imagem.url)
   end
-
-  private 
-
-  def imagem_url 
-    imagem.attached? ? Rails.application.routes.url_helpers.rails_blob_path(imagem, only_path: true) : ''
-  end
-
 end
