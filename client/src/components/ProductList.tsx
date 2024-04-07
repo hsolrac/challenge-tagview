@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { useLocation } from 'react-router-dom';
-import { SimpleGrid, Text  } from '@chakra-ui/react'
+import { useLocation, GetScrollRestorationKeyFunction } from 'react-router-dom';
+import { SimpleGrid, Text, Skeleton  } from '@chakra-ui/react'
+import { ToastContainer } from 'react-toastify';
 import { Product } from '../types/Product'
 import ProductCard from './ProductCard'
 import Modal from './Modal'
+import { getProducts } from '../services/api'
 
 type ProductProps = {
   products: Product[];
@@ -24,12 +26,14 @@ function ProductList({ products, isLoaded}: ProductProps ) {
     }
 
     if(params.idProduto) {
-      const product: Product = products.filter((product) => product.id === params.idProduto)[0]
-      setSelectedProduct(product)
-      setOpenModal(true)
+      loadProductModal(params)
     }
-  }, [location]) 
+  }, [products]) 
 
+  const loadProductModal = async (params: any) => {
+    const product: Product = products.filter((product: Product) => product.id === params.idProduto)[0]
+    openModal(product)
+  }
 
   const openModal = (product: Product) => {
     setSelectedProduct(product);
@@ -38,11 +42,16 @@ function ProductList({ products, isLoaded}: ProductProps ) {
 
   return (
     <SimpleGrid spacing={4} columns={4}>
-      {products.length === 0 && <Text>Nenhum resultado encontrado</Text>}
+      {products.length === 0 && 
+        <Skeleton isLoaded={isLoaded}>
+          <Text>Nenhum produto encontrado</Text>
+        </Skeleton>
+      }
       {products.map((product, index) => (
         <ProductCard key={index} isLoaded={isLoaded} product={product} openModal={(product: Product) => openModal(product)} /> 
       ))}
       <Modal open={isOpenModal} product={selectedProduct} onClose={() => setOpenModal(false)} />
+      <ToastContainer />
     </SimpleGrid>
   )
 }
