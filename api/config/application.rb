@@ -12,6 +12,7 @@ require "action_mailbox/engine"
 require "action_text/engine"
 require "action_view/railtie"
 require "action_cable/engine"
+require_relative'../config/initializers/api_key_check.rb'
 # require "rails/test_unit/railtie"
 
 # Require the gems listed in Gemfile, including any gems
@@ -29,7 +30,8 @@ module Api
     config.autoload_lib(ignore: %w(assets tasks))
 
     # Configuration for the application, engines, and railties goes here.
-    #
+    # Middleware configuration
+    config.middleware.insert_before 0, ApiKeyCheck
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
