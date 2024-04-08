@@ -28,18 +28,19 @@ module TagProducts
         row_hash['descricao'] = row_hash['descricao'].to_s
 
         imagem_blob = process_imagem(row_hash['imagem'])
-        row_hash['imagem'] = imagem_blob if imagem_blob
+        row_hash['imagem'] = imagem_blob ? imagem_blob : nil
         
         produtos << row_hash
       end
 
       result = Produto.create(produtos)
 
+
       if result.all?(&:valid?)
         return {ok: 'Importacão realizada com sucesso'}
       else
-        erros = result.map { |produto| produto.errors.full_messages }
-        return {error: result.errors }
+        erros = process_erros(result)
+        return {erros: erros }
       end
     end
 
@@ -57,6 +58,7 @@ module TagProducts
     end
 
     def process_imagem(imagem)
+      return if imagem.nil?
       imagem_binaria = Base64.decode64(imagem)
 
       content_type = imagem.match(/data:image\/(.*?);/)[1]
@@ -69,6 +71,14 @@ module TagProducts
       )
 
       imagem_blob
+    end
+
+    def process_erros(result)
+      erros = []
+      result.each_with_index do |item, index|
+        erros << "Erro na linha #{index+2}: #{item.errors.attribute_names.map(&:to_s).join(", ")}" if !item.valid?
+      end
+      erros
     end
   end
 end
