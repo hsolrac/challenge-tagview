@@ -1,15 +1,7 @@
 import React from 'react';
 import { Paginate } from 'react-paginate-chakra-ui';
 import { Stack, Skeleton, Select, Box } from '@chakra-ui/react';
-
-type PaginationProps = {
-  page: number;
-  totalPages: number;
-  totalCount: number;
-  handlePageClick: (page: number) => void;
-  handleLimitForPage: (limit: number) => void;
-  isLoaded: boolean;
-}
+import { PaginationProps } from '../types/Pagination';
 
 function Pagination({page, totalPages = 1 , totalCount = 1, handlePageClick, handleLimitForPage, isLoaded}: PaginationProps){
   
@@ -20,6 +12,7 @@ function Pagination({page, totalPages = 1 , totalCount = 1, handlePageClick, han
       </Skeleton>
       <Skeleton  height='40px' isLoaded={isLoaded}>
         <Select size={'sm'} onChange={(e) => handleLimitForPage(Number(e.target.value))}>
+          <option value={10}>10</option>
           <option value={20}>20</option>
           <option value={50}>50</option>
           <option value={totalCount}>Todos</option>

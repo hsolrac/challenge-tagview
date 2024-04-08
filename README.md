@@ -25,7 +25,7 @@ Aguarde alguns minutos e se tudo estiver ok, basta acessar *http://localhost:300
 ### Testes 
 
 ```bash
-docker exec it nome_do_container bin/rails rspec
+docker exec it nome_do_container rspec
 ```
 
 ### Documentação API (exemplos com cURL)
