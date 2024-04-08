@@ -1,24 +1,28 @@
-# README
+## API TagProducts 
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Requisitos 
 
-Things you may want to cover:
+- Ruby 3.1.2
+- Postgres
 
-* Ruby version
+### Configurando 
 
-* System dependencies
+1 - Instale as dependências ``bundle install`` 
 
-* Configuration
+2 - Prepare o banco de dados ``bin/rails db:prepare``
 
-* Database creation
+### Suite de Testes 
 
-* Database initialization
+1 - ``bin/rails rpsec``
 
-* How to run the test suite
+### Rodando aplicação 
 
-* Services (job queues, cache servers, search engines, etc.)
+1 - ``bin/rails server`` 
 
-* Deployment instructions
+2 - Acesse a aplicação via cURL:
 
-* ...
+```bash
+curl http://localhost:4000/api/v1/produtos 
+```
+
+
