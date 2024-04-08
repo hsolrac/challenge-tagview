@@ -39,18 +39,21 @@ export API_HOST=http://localhost:4000/api/v1/
  > O *[jq](https://jqlang.github.io/jq/download/)* é um utilitário para formatar saidas JSON no terminal
 
 ```bash
-curl "$API_HOST/produtos" | jq 
+curl -H "X-API-KEY: tagview-desafio-2024" "$API_HOST/produtos" | jq 
 ```
 #### Cadastrando um produto 
 
 ```bash
-curl -X POST $API_HOST -H "Content-Type: application/json" \
--d '{"nome": "Produto1", "descricao": "Este produto é um teste feito via cURL", "preco": 100}' | jq
+curl -X POST $API_HOST \
+     -H "Content-Type: application/json" \
+     -H "X-API-KEY: tagview-desafio-2024" \
+     -d '{"nome": "Produto1", "descricao": "Este produto é um teste feito via cURL", "preco": 100}' | jq
 ```
 #### Importando produtos via csv 
 
 ```bash
-curl -X POST -F "file=@/caminho/para/o/arquivo.csv" $API_HOST"/importacao"
+curl -X POST  -H "X-API-KEY: tagview-desafio-2024" \
+ -F "file=@/caminho/para/o/arquivo.csv" $API_HOST"/importacao"
 ```
 ##### TODO
 - API
