@@ -1,0 +1,96 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+
+  "/api/v1/produtos":
+    get:
+      summary: Listando Produtos
+      tags:
+      - Produtos
+      responses:
+        '200':
+          description: Lista de produtos retornada com sucesso.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {
+                  type: object, 
+                  properties: {
+                    id: {
+                      type: uuid
+                    },
+                    nome: {
+                      type: string
+                    },
+                    descricao: {
+                      type: string
+                    },
+                    preco: {
+                      type: number
+                    },
+                    imagem: {
+                      type: string
+                    }
+                  }
+                }
+    post:
+      summary: Criando um Produto
+      tags:
+      - Produtos
+      parameters: []
+      responses:
+        '201':
+          description: Produto criado com sucesso
+        '422':
+          description: Requisição inválida
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                  minLength: 3
+                  maxLength: 50
+                descricao:
+                  type: string
+                  minLength: 30
+                  maxLength: 255
+                preco:
+                  type: number
+                  minimum: 10
+                imagem:
+                  type: string
+              required:
+              - nome
+              - descricao
+              - preco
+
+  "/api/v1/produtos/importacao":
+    post:
+      summary: Importando Arquivo CSV de Produtos
+      tags:
+      - Produtos
+      requestBody:
+        content:
+          text/csv:
+            schema:
+              type: string
+              format: binary
+      responses:
+        '201':
+          description: Arquivo CSV importado com sucesso
+        '422':
+          description: Arquivo CSV inválido
+
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost:4000
+
