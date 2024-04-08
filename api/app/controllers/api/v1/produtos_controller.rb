@@ -5,7 +5,8 @@ module Api
       
       def index
         @pagy, produtos = pagy(Produto.all, items: params[:limit])
-
+        
+        sleep(3)
         render json: produtos
       end
 
@@ -13,6 +14,7 @@ module Api
         produto = Produto.new(produto_params)
 
         if produto.save
+          sleep(3)
           render json: produto, status: :ok
         else 
           render json: { errors: produto.errors.messages.values.flatten }, status: :unprocessable_entity
@@ -24,6 +26,7 @@ module Api
         importacao = TagProducts::ImportacaoService.new(file: file).call
         
         if importacao.key?(:ok)
+          sleep(3)
           render json: {}, status: :ok
         else
           render json: importacao, status: 400
