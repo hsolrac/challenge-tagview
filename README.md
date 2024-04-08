@@ -9,7 +9,7 @@
 
 
 ### Rodando projeto
-Clone este e repositorio
+Clone este repositorio
 ```bash
 git clone git@github.com:hsolrac/challenge-tagview.git
 cd challenge-tagview
@@ -22,6 +22,36 @@ docker compose up --build
 
 Aguarde alguns minutos e se tudo estiver ok, basta acessar *http://localhost:3000*
 
+### Testes 
+
+```bash
+docker exec it nome_do_container bin/rails rspec
+```
+
+### Documentação API (exemplos com cURL)
+
+Defina a seguinte variavel de ambiente para usar nos exemplos:
+
+```bash
+export API_HOST=http://localhost:4000/api/v1/
+```
+#### Lista de Produtos 
+ > O *[jq](https://jqlang.github.io/jq/download/)* é um utilitário para formatar saidas JSON no terminal
+
+```bash
+curl "$API_HOST/produtos" | jq 
+```
+#### Cadastrando um produto 
+
+```bash
+curl -X POST $API_HOST -H "Content-Type: application/json" \
+-d '{"nome": "Produto1", "descricao": "Este produto é um teste feito via cURL", "preco": 100}' | jq
+```
+#### Importando produtos via csv 
+
+```bash
+curl -X POST -F "file=@/caminho/para/o/arquivo.csv" $API_HOST"/importacao"
+```
 ##### TODO
 - API
   - Endpoints
