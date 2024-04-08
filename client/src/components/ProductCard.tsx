@@ -15,6 +15,7 @@ function ProductCard({product, openModal, isLoaded}: ProductCardProps ) {
       <Card style={{cursor: 'pointer'}} onClick={() => openModal(product)}>
         <CardHeader>
           <Image
+            boxSize='250px'
             fallbackSrc='https://via.placeholder.com/251x141'
             src={product.imagem}
             alt={product.nome}
